@@ -8,21 +8,25 @@ from playsound import playsound
 
 semester = None
 
-# input to command line (year) (semester) (crn)
-# as an example:
-# python3 class_track.py 2024 spring 13267
+if(len(sys.argv) < 3):
+    print("usecase: class_track.py [semester] [year] [crn]")
+    exit(0)
 
-if(sys.argv[2] == "fall"):
+# input to command line (semester) (year) (crn)
+# as an example:
+# python3 class_track.py  spring 2024 13267
+
+if(sys.argv[1] == "fall"):
   semester = vtt.Semester.FALL
 
-if(sys.argv[2] == "summer"):
+if(sys.argv[1] == "summer"):
   semester = vtt.Semester.SUMMER
 
-if(sys.argv[2] == "spring"):
+if(sys.argv[1] == "spring"):
   semester = vtt.Semester.SPRING
 # print(sys.argv[1], sys.argv[2], sys.argv[3])
 
-course = vtt.get_crn(sys.argv[1], semester, sys.argv[3])
+course = vtt.get_crn(sys.argv[2], semester, sys.argv[3])
 
 while(course.has_open_spots() == False):
     continue
@@ -61,8 +65,8 @@ image_label.pack()
 
 def ding():
     playsound("./sound-6.mp3")
-    root.after(200,ding)
+    root.after(500,ding)
 
-root.after(200, ding)
+root.after(100, ding)
 
 root.mainloop()
